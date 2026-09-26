@@ -18,10 +18,10 @@ tmux                      # or: sesh connect (prefix T from inside tmux)
 
 # 3a. focused work: editor + one agent
 nvim .                    # window 1
-prefix a                  #  → spawns a Claude Code pane on the right
+prefix a                  #  → spawns an OpenCode pane on the right
 
 # 3b. parallel agents: one isolated worktree per task
-wt login-bug              # new branch+worktree+session: nvim | claude windows
+wt login-bug              # new branch+worktree+session: nvim | opencode windows
 wt payment-flow           # a SECOND agent, totally isolated
 prefix T                  # fuzzy-jump between agent sessions (sesh)
 
@@ -64,7 +64,7 @@ real command.
 | `cat` | `bat` |
 | `g` `gs` `ga` `gaa` `gc` `gcm` `gco` `gd` `gl` `gp` `gpl` | git shortcuts |
 | `lg` | `lazygit` |
-| `cl` / `clc` | `claude` / `claude --continue` |
+| `oc` | `opencode` |
 | `..` `...` | `cd ..` / `cd ../..` |
 | `top` | `btop` |
 
@@ -115,7 +115,7 @@ Prefix = **`Ctrl-a`**. Press prefix, release, then the key.
 | `prefix T` | **sesh** session switcher (fuzzy) |
 | `prefix L` | last session |
 | `prefix d` | detach (session keeps running) |
-| `prefix a` | **spawn a Claude Code pane** (right) |
+| `prefix a` | **spawn an OpenCode pane** (right) |
 | `prefix g` | **lazygit** popup |
 | `prefix [` | copy mode (then `v` select, `y` yank, `q` quit) |
 | `prefix r` | reload tmux config |
@@ -134,7 +134,7 @@ sesh list        # all sessions/projects (used by prefix T)
 ## 5. The `wt` orchestrator (parallel agents)
 
 ```bash
-wt <branch>      # create/attach: worktree + tmux session (nvim | claude)
+wt <branch>      # create/attach: worktree + tmux session (nvim | opencode)
 wt ls            # list worktrees and tmux sessions
 wt cd <branch>   # print worktree path → cd "$(wt cd <branch>)"
 wt rm <branch>   # remove worktree + kill its session
@@ -193,22 +193,18 @@ Leader = **`Space`**. First launch auto-installs LSPs/formatters via Mason
 
 ---
 
-## 7. Claude Code inside Neovim (`claudecode.nvim`)
+## 7. OpenCode inside Neovim (`opencode.nvim`)
 
 | Key | Mode | Action |
 |---|---|---|
-| `<leader>ac` | n | toggle Claude Code |
-| `<leader>af` | n | focus the Claude window |
-| `<leader>aC` | n | continue last conversation |
-| `<leader>ar` | n | resume a conversation |
-| `<leader>ab` | n | add current buffer to context |
-| `<leader>as` | **v** | send selection to Claude |
-| `<leader>as` | tree | add highlighted file (in neo-tree) |
-| `<leader>aa` / `<leader>ad` | n | accept / deny a proposed diff |
-| `<leader>am` | n | pick Claude model |
+| `<leader>ac` | n | toggle OpenCode terminal |
+| `<leader>as` | n / visual | ask about cursor / selected code |
+| `<leader>am` | n / visual | pick an OpenCode action or prompt |
+| `da` / `dr` | edit diff | accept / reject the edit request |
 
-Flow: select code → `<leader>as` → ask Claude to change it → review the diff it
-proposes → `<leader>aa` to accept or `<leader>ad` to reject.
+Flow: save the file → select code → `<leader>as` → ask OpenCode to change it →
+review its diff → `da` to accept or `dr` to reject (when an edit approval opens).
+Run `:checkhealth opencode` if the connection is not working.
 
 ---
 

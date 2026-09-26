@@ -2,6 +2,7 @@
 # Install with: brew bundle --file=Brewfile
 
 tap "joshmedeski/sesh"
+tap "anomalyco/tap"
 
 # --- Core: shell, prompt, multiplexer, editor ---
 brew "fish"          # login shell
@@ -28,6 +29,7 @@ brew "jq"            # JSON
 brew "glow"          # markdown renderer (terminal)
 brew "tlrc"          # tldr (rust client)
 brew "sesh"          # tmux session manager
+brew "anomalyco/tap/opencode-v2"  # AI coding agent
 
 # --- yazi preview deps (light) ---
 brew "ffmpegthumbnailer"

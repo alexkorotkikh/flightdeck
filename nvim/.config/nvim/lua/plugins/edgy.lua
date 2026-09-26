@@ -1,13 +1,13 @@
 -- edgy.nvim owns the cockpit's panel geometry, so `:q` can't strand the layout.
 --
 -- The base extra (lazyvim.plugins.extras.ui.edgy) pins Neo-tree to the left and
--- adopts snacks terminals onto the edge matching their position. Claude Code
--- opens as a snacks terminal on `split_side = "right"`, so it lands on the right
+-- adopts snacks terminals onto the edge matching their position. OpenCode
+-- opens as a snacks terminal on the right, so it lands on the right
 -- edge automatically. edgy then enforces panel widths and adds "edgy" to
 -- neo-tree's open_files_do_not_replace_types — so closing the center editor with
 -- `:q` no longer lets the panels balloon, and the next file opens at full width.
 --
--- This override just gives the right-edge terminal (Claude) a sensible width.
+-- This override gives the right-edge OpenCode terminal a sensible width.
 return {
   {
     "folke/edgy.nvim",

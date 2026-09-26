@@ -2,8 +2,8 @@
 # wt — git worktree + tmux + agent orchestrator
 #
 # The core of the agentic-parallel workflow: spin up an isolated git worktree
-# for a task, give it its own tmux session with an editor window and a Claude
-# Code window, then drop you into it. Run several at once; agents never collide.
+# for a task, give it its own tmux session with an editor window and an OpenCode
+# window, then drop you into it. Run several at once; agents never collide.
 #
 #   wt <branch>        create/attach a worktree session for <branch>
 #   wt ls              list worktrees and their sessions
@@ -45,8 +45,8 @@ cmd_create() {
   if ! tmux has-session -t "=$session" 2>/dev/null; then
     tmux new-session -d -s "$session" -c "$wtdir" -n editor
     tmux send-keys -t "$session:editor" "nvim" C-m
-    tmux new-window -t "$session" -c "$wtdir" -n claude
-    tmux send-keys -t "$session:claude" "claude" C-m
+    tmux new-window -t "$session" -c "$wtdir" -n opencode
+    tmux send-keys -t "$session:opencode" "opencode" C-m
     tmux select-window -t "$session:editor"
   fi
 
