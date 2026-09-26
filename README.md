@@ -2,15 +2,15 @@
 
 > Your **agentic cockpit** in the terminal — an IDE-free macOS dev environment
 > where AI agents are first-class. Ghostty · fish · tmux · Neovim (LazyVim) ·
-> Claude Code, themed Catppuccin Mocha and managed with GNU Stow.
+> OpenCode V2, themed Catppuccin Mocha and managed with GNU Stow.
 
-Built for a workflow where AI agents are first-class: run several Claude Code
+Built for a workflow where AI agents are first-class: run several OpenCode
 agents in parallel on isolated git worktrees, or drive one from inside Neovim.
 
 |  |  |
 |:---:|:---:|
-| [![Neovim with Claude Code in a split](assets/cockpit.png)](assets/cockpit.png) | [![lazygit with delta diffs](assets/lazygit.png)](assets/lazygit.png) |
-| **Neovim + Claude Code** — the agentic cockpit | **lazygit** — git TUI (`prefix g`) |
+| [![Legacy Neovim cockpit screenshot](assets/cockpit.png)](assets/cockpit.png) | [![lazygit with delta diffs](assets/lazygit.png)](assets/lazygit.png) |
+| **Neovim + OpenCode** — cockpit (screenshot predates the switch) | **lazygit** — git TUI (`prefix g`) |
 | [![yazi file manager with bat previews](assets/yazi.png)](assets/yazi.png) | [![btop system monitor](assets/btop.png)](assets/btop.png) |
 | **yazi** — file manager (`y`) | **btop** — system monitor (`top`) |
 
@@ -22,7 +22,7 @@ agents in parallel on isolated git worktrees, or drive one from inside Neovim.
 | Shell | [fish](https://fishshell.com) + [Starship](https://starship.rs) prompt |
 | Multiplexer | [tmux](https://github.com/tmux/tmux) + [sesh](https://github.com/joshmedeski/sesh) + tpm plugins |
 | Editor | [Neovim](https://neovim.io) + [LazyVim](https://lazyvim.org) |
-| Agent | [Claude Code](https://claude.com/claude-code) + `wt` worktrees + [claudecode.nvim](https://github.com/coder/claudecode.nvim) |
+| Agent | [OpenCode V2](https://opencode.ai/v2/docs/) + `wt` worktrees + [opencode.nvim](https://github.com/nickjvandyke/opencode.nvim) |
 | CLI core | fzf · fd · ripgrep · bat · eza · zoxide · git-delta · lazygit · yazi · atuin · btop · glow · gh |
 | Theme | Catppuccin Mocha (everywhere) |
 
@@ -37,6 +37,10 @@ chsh -s "$(command -v fish)"   # make fish your login shell
 
 `install.sh` is idempotent and backs up any conflicting files to
 `~/.dotfiles-backup-<timestamp>/` before symlinking.
+Start `opencode` once and use `/connect` to sign in to a model provider;
+`/models` selects a model. If upgrading an existing flightdeck install, reload
+tmux with `prefix r` and restart Neovim after `./install.sh`. Existing `wt`
+sessions keep their old windows until you recreate them.
 
 ## Run several projects at once
 
@@ -46,7 +50,7 @@ nested in the other — so a dozen projects and their agents all stay live.
 - **Outer — Ghostty tabs = projects.** `⌘T` new tab · `⌘1`…`⌘8` jump · `⌘9` last ·
   `⌘⇧[` / `⌘⇧]` cycle. One macOS-native tab per repo/client.
 - **Inner — tmux = that project's cockpit.** Each tab holds a tmux session of
-  windows (editor, Claude agents) and panes. `Ctrl-a 1/2` jump windows,
+  windows (editor, OpenCode agents) and panes. `Ctrl-a 1/2` jump windows,
   `Ctrl-a T` fuzzy-switch sessions (sesh), `wt <branch>` spins an isolated agent.
 
 ```text
@@ -54,7 +58,7 @@ nested in the other — so a dozen projects and their agents all stay live.
  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐
  │ tmux · C-a  │ │ tmux · C-a  │ │ tmux · C-a  │  ← a cockpit inside each tab
  │  1 editor   │ │  1 editor   │ │  1 editor   │
- │  2 claude   │ │  2 claude   │ │  2 server   │  ← windows · agents · C-a 1/2
+ │  2 opencode │ │  2 opencode │ │  2 server   │  ← windows · agents · C-a 1/2
  └─────────────┘ └─────────────┘ └─────────────┘
         ⌘ + number → projects   ·   Ctrl-a + number → tasks
 ```
@@ -67,18 +71,20 @@ flips projects, `Ctrl-a`+number flips tasks within one.
 **Parallel agents — `wt`** (the core idea):
 
 ```bash
-wt my-feature     # git worktree + dedicated tmux session (nvim + claude windows)
+wt my-feature     # git worktree + dedicated tmux session (nvim + opencode windows)
 wt another-fix    # a second isolated agent, zero collisions
 wt ls             # list worktrees and sessions
 wt rm my-feature  # tear it down
 ```
 
-Each task gets its own checkout and tmux session, so 2–4 Claude Code agents run
+Each task gets its own checkout and tmux session, so 2–4 OpenCode agents run
 concurrently on separate branches. Jump between them with `prefix + T` (sesh).
 
-**In-editor agent — `claudecode.nvim`:** press `<leader>ac` in Neovim to toggle
-Claude Code bound to the editor; send a visual selection with `<leader>as`;
-accept/deny proposed diffs with `<leader>aa` / `<leader>ad`.
+**In-editor agent — `opencode.nvim`:** press `<leader>ac` in Neovim to toggle
+OpenCode in a right-hand terminal; use `<leader>as` on a visual selection (or
+cursor) to ask with context and `<leader>am` for actions and prompts. Save the
+buffer first: OpenCode reads referenced files from disk. When an edit needs
+approval, the plugin opens a diff; use `da` to accept or `dr` to reject there.
 
 ## Layout (Stow packages)
 
@@ -107,15 +113,16 @@ Manage individual packages with `stow -t ~ <package>` / `stow -D -t ~ <package>`
 | tmux | `Ctrl-a` | prefix |
 | tmux | `prefix \|` / `prefix -` | split right / down |
 | tmux | `prefix T` | session switcher (sesh + fzf) |
-| tmux | `prefix a` | spawn a Claude Code pane |
+| tmux | `prefix a` | spawn an OpenCode pane |
 | tmux | `prefix g` | lazygit popup |
 | tmux | `prefix c` | new window (opens at the worktree root in `wt` sessions) |
 | nvim + tmux | `Ctrl-h/j/k/l` | move across Neovim splits **and** tmux panes (seamless, no prefix) |
 | nvim | `<space>` | leader (LazyVim) |
 | nvim | `<leader>e` | toggle Neo-tree file explorer (`H` shows dotfiles) |
 | nvim | `<leader><leader>` | fuzzy find files (fzf-lua) |
-| nvim | `<leader>ac` | toggle Claude Code |
-| nvim | `<leader>as` | send selection to Claude (visual) |
+| nvim | `<leader>ac` | toggle OpenCode |
+| nvim | `<leader>as` | ask OpenCode with selection/cursor context |
+| nvim | `<leader>am` | OpenCode actions and prompts |
 | fish | `Ctrl-r` | atuin history search |
 | fish | `Ctrl-t` / `Alt-c` | fzf file / directory |
 
@@ -150,8 +157,8 @@ New here? These cover most day-to-day moves.
 
 **Git & agents:**
 - `lg` or `prefix g` → [**lazygit**](https://github.com/jesseduffield/lazygit) TUI · `gh …` → GitHub (PRs, issues) from the terminal.
-- `<leader>ac` opens Claude Code inside Neovim; leave its pane with `Ctrl-\ Ctrl-n` then `Ctrl-h`.
-- `prefix a` spawns a Claude pane; `wt <branch>` spins up a full parallel agent on its own worktree.
+- `<leader>ac` opens OpenCode inside Neovim; leave its pane with `Ctrl-\ Ctrl-n` then `Ctrl-h`.
+- `prefix a` spawns an OpenCode pane; `wt <branch>` spins up a full parallel agent on its own worktree.
 
 **Discover anything:** press `<leader>` (Space) and pause — which-key pops up with every shortcut.
 

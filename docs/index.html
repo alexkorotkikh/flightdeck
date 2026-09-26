@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <script>document.documentElement.classList.add('js')</script>
 <title>flightdeck — your agentic cockpit in the terminal</title>
-<meta name="description" content="An IDE-free macOS dev environment where AI agents are first-class. Ghostty · fish · tmux · Neovim (LazyVim) · Claude Code, themed Catppuccin Mocha, managed with GNU Stow." />
+<meta name="description" content="An IDE-free macOS dev environment where AI agents are first-class. Ghostty · fish · tmux · Neovim (LazyVim) · OpenCode, themed Catppuccin Mocha, managed with GNU Stow." />
 <meta name="theme-color" content="#1e1e2e" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9C%88%EF%B8%8F%3C/text%3E%3C/svg%3E" />
 <!-- Open Graph -->
 <meta property="og:type" content="website" />
 <meta property="og:title" content="flightdeck — your agentic cockpit in the terminal" />
-<meta property="og:description" content="IDE-free macOS dev environment where AI agents are first-class. Ghostty · fish · tmux · Neovim · Claude Code · Catppuccin Mocha." />
+<meta property="og:description" content="IDE-free macOS dev environment where AI agents are first-class. Ghostty · fish · tmux · Neovim · OpenCode · Catppuccin Mocha." />
 <meta property="og:image" content="assets/cockpit.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -274,7 +274,7 @@
     <span class="eyebrow">macOS · IDE-free · <b>agent-native</b></span>
     <h1><span class="word">flightdeck</span><span class="plane">✈︎</span><span class="cursor"></span></h1>
     <p class="tagline">Your agentic cockpit in the terminal.</p>
-    <p class="subline"><b>Ghostty · fish · tmux · Neovim (LazyVim) · Claude Code</b> — a dotfiles setup where AI agents are first-class: run several Claude Code agents in parallel on isolated git worktrees, or drive one from inside Neovim. Themed Catppuccin Mocha, managed with GNU Stow.</p>
+    <p class="subline"><b>Ghostty · fish · tmux · Neovim (LazyVim) · OpenCode V2</b> — a dotfiles setup where AI agents are first-class: run several OpenCode agents in parallel on isolated git worktrees, or drive one from inside Neovim. Themed Catppuccin Mocha, managed with GNU Stow.</p>
 
     <div class="term">
       <div class="bar"><span class="tl r"></span><span class="tl y"></span><span class="tl g"></span><span class="name">fish — bootstrap</span></div>
@@ -296,9 +296,9 @@
     <div class="label">the cockpit <span class="line"></span></div>
     <div class="shots">
       <figure class="shot">
-        <div class="bar"><span class="tl r"></span><span class="tl y"></span><span class="tl g"></span><span class="name">nvim — claudecode.nvim</span></div>
-        <img src="assets/cockpit.png" alt="Neovim with Claude Code in a split" loading="lazy" />
-        <figcaption class="cap"><b>Neovim + Claude Code</b> — editor, file tree and the agent in one frame.</figcaption>
+        <div class="bar"><span class="tl r"></span><span class="tl y"></span><span class="tl g"></span><span class="name">nvim — agent cockpit</span></div>
+        <img src="assets/cockpit.png" alt="Legacy screenshot of Neovim with Claude Code in a split" loading="lazy" />
+        <figcaption class="cap"><b>Neovim + OpenCode</b> — editor, file tree and the agent in one frame. Screenshot predates the OpenCode switch.</figcaption>
       </figure>
       <figure class="shot">
         <div class="bar"><span class="tl r"></span><span class="tl y"></span><span class="tl g"></span><span class="name">lazygit</span></div>
@@ -334,10 +334,10 @@
         <div class="tmuxwin">
           <div class="tmuxbar">
             <span class="twin on">1 editor</span>
-            <span class="twin agent">2 ✶ claude</span>
+            <span class="twin agent">2 ✶ opencode</span>
             <span class="twin">3 server</span>
           </div>
-          <div class="tmuxbody"><span class="prompt">❯</span> ~/api · <span class="br">main</span> · nvim + Claude Code<span class="blink2"></span></div>
+          <div class="tmuxbody"><span class="prompt">❯</span> ~/api · <span class="br">main</span> · nvim + OpenCode<span class="blink2"></span></div>
         </div>
         <div class="leg"><span class="k">⌘</span>+n → projects&nbsp;&nbsp;·&nbsp;&nbsp;<span class="k">⌃a</span>+n → tasks</div>
       </div>
@@ -359,7 +359,7 @@
       <div class="card" style="--accent:#89b4fa"><div class="role">Shell</div><div class="tool">fish + Starship</div><p>Inline abbreviations, a fast prompt, zoxide + atuin + fzf wired in.</p></div>
       <div class="card" style="--accent:#a6e3a1"><div class="role">Multiplexer</div><div class="tool">tmux + sesh</div><p>The cockpit: sessions, panes, popups, fuzzy session switching.</p></div>
       <div class="card" style="--accent:#fab387"><div class="role">Editor</div><div class="tool">Neovim · LazyVim</div><p>Neo-tree, fzf-lua, treesitter — seamless tmux-pane navigation.</p></div>
-      <div class="card" style="--accent:#f5c2e7"><div class="role">Agent</div><div class="tool">Claude Code · wt</div><p>Parallel agents on isolated worktrees, plus claudecode.nvim in-editor.</p></div>
+      <div class="card" style="--accent:#f5c2e7"><div class="role">Agent</div><div class="tool">OpenCode · wt</div><p>Parallel agents on isolated worktrees, plus opencode.nvim in-editor.</p></div>
       <div class="card" style="--accent:#94e2d5"><div class="role">CLI core</div><div class="tool">bat · eza · delta · yazi</div><p>fd, ripgrep, lazygit, btop, gh — sharper defaults for everything.</p></div>
     </div>
   </section>
@@ -371,7 +371,7 @@
       <div class="codeblk">
         <div class="bar"><span class="tl r"></span><span class="tl y"></span><span class="tl g"></span></div>
 <pre><span class="cmt"># one isolated agent per task — zero collisions</span>
-<span class="p">❯</span> <span class="k">wt</span> <span class="arg">my-feature</span>     <span class="cmt"># worktree + tmux (nvim + claude)</span>
+<span class="p">❯</span> <span class="k">wt</span> <span class="arg">my-feature</span>     <span class="cmt"># worktree + tmux (nvim + opencode)</span>
 <span class="p">❯</span> <span class="k">wt</span> <span class="arg">another-fix</span>   <span class="cmt"># a second agent, in parallel</span>
 <span class="p">❯</span> <span class="k">wt</span> ls             <span class="cmt"># list worktrees & sessions</span>
 
@@ -379,8 +379,8 @@
 <span class="p">❯</span> prefix <span class="arg">T</span>          <span class="cmt"># fuzzy session switcher (sesh)</span></pre>
       </div>
       <ul>
-        <li><span class="ic">⌥</span><span><b>Parallel by design.</b> Each task gets its own checkout and tmux session, so 2–4 Claude Code agents run concurrently on separate branches.</span></li>
-        <li><span class="ic">⌘</span><span><b>Agent in the editor.</b> <kbd>&lt;leader&gt;ac</kbd> toggles Claude Code bound to Neovim — review and apply diffs natively.</span></li>
+        <li><span class="ic">⌥</span><span><b>Parallel by design.</b> Each task gets its own checkout and tmux session, so 2–4 OpenCode agents run concurrently on separate branches.</span></li>
+        <li><span class="ic">⌘</span><span><b>Agent in the editor.</b> <kbd>&lt;leader&gt;ac</kbd> toggles OpenCode in Neovim; use <kbd>&lt;leader&gt;as</kbd> to ask about a selection and review requested edits in a diff.</span></li>
         <li><span class="ic">⇄</span><span><b>One grid.</b> <kbd>Ctrl-h/j/k/l</kbd> flows seamlessly between Neovim splits and tmux panes.</span></li>
       </ul>
     </div>

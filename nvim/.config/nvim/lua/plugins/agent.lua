@@ -1,29 +1,45 @@
--- In-editor Claude Code: shares selection/buffer with Claude and renders
--- diffs natively in Neovim for review/apply. Pairs with the `wt` worktree
--- orchestrator for parallel agents outside the editor.
+-- OpenCode in a right-hand Snacks terminal, with editor context and edit review.
+-- For isolated parallel agents use `wt` instead.
+local command = "opencode"
+local terminal = {
+  win = { position = "right", enter = false },
+}
+
 return {
   {
-    "coder/claudecode.nvim",
+    "nickjvandyke/opencode.nvim",
+    branch = "main", -- V2 support; stable release tags target V1
     dependencies = { "folke/snacks.nvim" },
-    config = true,
+    config = function()
+      require("opencode.config").opts.server.start = function()
+        require("snacks.terminal").open(command, terminal)
+      end
+    end,
     keys = {
-      { "<leader>a", nil, desc = "AI/Claude Code" },
-      { "<leader>ac", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude" },
-      { "<leader>af", "<cmd>ClaudeCodeFocus<cr>", desc = "Focus Claude" },
-      { "<leader>ar", "<cmd>ClaudeCode --resume<cr>", desc = "Resume Claude" },
-      { "<leader>aC", "<cmd>ClaudeCode --continue<cr>", desc = "Continue Claude" },
-      { "<leader>am", "<cmd>ClaudeCodeSelectModel<cr>", desc = "Select Claude model" },
-      { "<leader>ab", "<cmd>ClaudeCodeAdd %<cr>", desc = "Add current buffer" },
-      { "<leader>as", "<cmd>ClaudeCodeSend<cr>", mode = "v", desc = "Send selection to Claude" },
+      { "<leader>a", nil, desc = "AI/OpenCode" },
+      {
+        "<leader>ac",
+        function()
+          require("snacks.terminal").toggle(command, terminal)
+        end,
+        desc = "Toggle OpenCode",
+      },
       {
         "<leader>as",
-        "<cmd>ClaudeCodeTreeAdd<cr>",
-        desc = "Add file from tree",
-        ft = { "NvimTree", "neo-tree", "oil", "minifiles", "snacks_picker_list" },
+        function()
+          require("opencode").ask("@this: ")
+        end,
+        mode = { "n", "x" },
+        desc = "Ask OpenCode about selection/cursor",
       },
-      -- Diff management
-      { "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
-      { "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" },
+      {
+        "<leader>am",
+        function()
+          require("opencode").select()
+        end,
+        mode = { "n", "x" },
+        desc = "OpenCode actions and prompts",
+      },
     },
   },
 }

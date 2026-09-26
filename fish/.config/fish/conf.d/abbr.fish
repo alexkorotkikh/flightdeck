@@ -28,8 +28,7 @@ abbr -a gpl 'git pull'
 abbr -a lg lazygit
 
 # Agentic
-abbr -a cl claude
-abbr -a clc 'claude --continue'
+abbr -a oc opencode
 
 # Navigation / tools
 abbr -a ".." 'cd ..'
